@@ -73,3 +73,11 @@ Note: Registration information is stored locally in the user's browser. The curr
 ## Author
 
 Developed as an Event Management Website project using HTML, CSS, and JavaScript.
+
+## Live Demo
+
+Visit Eventora: https://grand-douhua-2aab11.netlify.app/
+
+## GitHub Repository
+
+Source Code: https://github.com/Monuk29/eventora-event-management
