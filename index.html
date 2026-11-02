@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover exciting events, explore new experiences, and book your next adventure with Eventora.">
+
+<title>Eventora | Discover Extraordinary Events</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<header class="navbar">
+    <a href="#" class="logo">Event<span>ora</span></a>
+
+    <nav class="nav-links" id="navLinks">
+    <a href="#home">Home</a>
+    <a href="#events">Explore Events</a>
+    <a href="#" id="registrationsLink">My Registrations</a>
+    <a href="#about">About</a>
+</nav>
+
+    <div class="nav-actions">
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle color theme">
+            ☀️
+        </button>
+
+        <a href="#events" class="nav-btn">Explore Now ↗</a>
+
+        <button id="menuToggle" class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
+            ☰
+        </button>
+    </div>
+</header>
+
+<!-- Hero Section -->
+<main>
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <p class="eyebrow">YOUR NEXT EXPERIENCE STARTS HERE</p>
+
+            <h1>
+                Discover Events.<br>
+                <span>Create Memories.</span>
+            </h1>
+
+            <p class="hero-description">
+                From inspiring conferences to unforgettable concerts,
+                discover experiences that bring people together.
+            </p>
+
+            <div class="hero-actions">
+                <a href="#events" class="primary-btn">Explore Events ↗</a>
+                <a href="#about" class="secondary-btn">Learn More</a>
+            </div>
+
+            <div class="hero-stats">
+                <div>
+                    <h3>120+</h3>
+                    <p>Events</p>
+                </div>
+
+                <div>
+                    <h3>15K+</h3>
+                    <p>Attendees</p>
+                </div>
+
+                <div>
+                    <h3>30+</h3>
+                    <p>Cities</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-visual">
+            <div class="hero-image">
+                <div class="image-overlay">
+                    <span class="live-badge">● UPCOMING EVENT</span>
+                    <h2>Ideas That Shape Tomorrow</h2>
+                    <p>Technology · Innovation · Community</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section class="events-section" id="events">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">FIND YOUR NEXT EXPERIENCE</p>
+                <h2>Explore <span>Events</span></h2>
+                <p>Discover experiences worth showing up for.</p>
+            </div>
+        </div>
+
+        <!-- Search and Filters -->
+        <div class="event-controls">
+            <input
+                type="search"
+                id="searchInput"
+                placeholder="Search events..."
+                aria-label="Search events"
+            >
+
+            <div class="category-filters" id="categoryFilters">
+                <button class="filter-btn active" data-category="All">All Events</button>
+                <button class="filter-btn" data-category="Technology">Technology</button>
+                <button class="filter-btn" data-category="Music">Music</button>
+                <button class="filter-btn" data-category="Workshop">Workshops</button>
+                <button class="filter-btn" data-category="Business">Business</button>
+            </div>
+        </div>
+
+        <!-- JavaScript will insert event cards here -->
+        <div class="events-grid" id="eventsGrid">
+            <p>Loading events...</p>
+        </div>
+
+        <p class="empty-message" id="emptyMessage" hidden>
+            No events found. Try another search or category.
+        </p>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <p class="eyebrow">ABOUT EVENTORA</p>
+        <h2>Making Every Event <span>Memorable.</span></h2>
+
+        <p>
+            Eventora brings people, ideas, and experiences together.
+            Find your community, discover something new, and make
+            memories that last.
+        </p>
+
+        <a href="#events" class="primary-btn">Find Your Event ↗</a>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <a href="#home" class="logo">Event<span>ora</span></a>
+    <p>Discover extraordinary experiences.</p>
+    <p>&copy; 2026 Eventora. Built with HTML, CSS and JavaScript.</p>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
