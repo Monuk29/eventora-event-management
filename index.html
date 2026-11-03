@@ -8,6 +8,9 @@
 
 <title>Eventora | Discover Extraordinary Events</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 
 </head>
@@ -26,10 +29,10 @@
 
     <div class="nav-actions">
         <button id="themeToggle" class="theme-toggle" aria-label="Toggle color theme">
-            ☀️
+            Light
         </button>
 
-        <a href="#events" class="nav-btn">Explore Now ↗</a>
+        <a href="#events" class="nav-btn">Browse events</a>
 
         <button id="menuToggle" class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
             ☰
@@ -41,49 +44,26 @@
 <main>
     <section class="hero" id="home">
         <div class="hero-content">
-            <p class="eyebrow">YOUR NEXT EXPERIENCE STARTS HERE</p>
-
-            <h1>
-                Discover Events.<br>
-                <span>Create Memories.</span>
-            </h1>
-
+            <h1>Find something worth showing up for.</h1>
             <p class="hero-description">
-                From inspiring conferences to unforgettable concerts,
-                discover experiences that bring people together.
+                Conferences, concerts and workshops across Bhubaneswar and Cuttack.
+                Pick one, register in a minute, and your spot is saved in this browser.
             </p>
-
             <div class="hero-actions">
-                <a href="#events" class="primary-btn">Explore Events ↗</a>
-                <a href="#about" class="secondary-btn">Learn More</a>
-            </div>
-
-            <div class="hero-stats">
-                <div>
-                    <h3>120+</h3>
-                    <p>Events</p>
-                </div>
-
-                <div>
-                    <h3>15K+</h3>
-                    <p>Attendees</p>
-                </div>
-
-                <div>
-                    <h3>30+</h3>
-                    <p>Cities</p>
-                </div>
+                <a href="#events" class="primary-btn">Browse events</a>
+                <a href="#about" class="secondary-btn">About Eventora</a>
             </div>
         </div>
 
-        <div class="hero-visual">
-            <div class="hero-image">
-                <div class="image-overlay">
-                    <span class="live-badge">● UPCOMING EVENT</span>
-                    <h2>Ideas That Shape Tomorrow</h2>
-                    <p>Technology · Innovation · Community</p>
-                </div>
+        <div class="ticket" id="heroTicket">
+            <div class="ticket-img" id="tImg"></div>
+            <div class="ticket-body">
+                <p>Next event</p>
+                <h2 id="tName"></h2>
+                <p id="tMeta"></p>
             </div>
+            <div class="ticket-clock" id="tClock"></div>
+            <button class="details-btn" id="tOpen">See details</button>
         </div>
     </section>
 
@@ -91,9 +71,8 @@
     <section class="events-section" id="events">
         <div class="section-heading">
             <div>
-                <p class="eyebrow">FIND YOUR NEXT EXPERIENCE</p>
-                <h2>Explore <span>Events</span></h2>
-                <p>Discover experiences worth showing up for.</p>
+                <h2>Upcoming events</h2>
+                <p>Search by name or place, or filter by type.</p>
             </div>
         </div>
 
@@ -102,7 +81,7 @@
             <input
                 type="search"
                 id="searchInput"
-                placeholder="Search events..."
+                placeholder="Search by name or place"
                 aria-label="Search events"
             >
 
@@ -114,6 +93,8 @@
                 <button class="filter-btn" data-category="Business">Business</button>
             </div>
         </div>
+
+        <p class="result-count" id="resultCount" aria-live="polite"></p>
 
         <!-- JavaScript will insert event cards here -->
         <div class="events-grid" id="eventsGrid">
@@ -127,23 +108,19 @@
 
     <!-- About Section -->
     <section class="about-section" id="about">
-        <p class="eyebrow">ABOUT EVENTORA</p>
-        <h2>Making Every Event <span>Memorable.</span></h2>
-
+        <h2>A simple way to find events and save your seat.</h2>
         <p>
-            Eventora brings people, ideas, and experiences together.
-            Find your community, discover something new, and make
-            memories that last.
+            Browse what's on, register with your name, email and phone,
+            and see everything you've booked under My Registrations.
         </p>
-
-        <a href="#events" class="primary-btn">Find Your Event ↗</a>
+        <a href="#events" class="primary-btn">Find an event</a>
     </section>
 </main>
 
 <!-- Footer -->
 <footer class="footer">
     <a href="#home" class="logo">Event<span>ora</span></a>
-    <p>Discover extraordinary experiences.</p>
+    <p>Events in Bhubaneswar and Cuttack.</p>
     <p>&copy; 2026 Eventora. Built with HTML, CSS and JavaScript.</p>
 </footer>
 

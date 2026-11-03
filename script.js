@@ -99,6 +99,8 @@ const menuToggle = document.getElementById("menuToggle");
 
 const navLinks = document.getElementById("navLinks");
 
+const resultCount = document.getElementById("resultCount");
+
 
 /* ====================================
    3. DATE FORMATTER
@@ -137,7 +139,7 @@ function getCountdown(dateString) {
         difference / (1000 * 60 * 60 * 24)
     );
 
-    return `${days} days left`;
+    return `${days} ${days === 1 ? "day" : "days"} left`;
 
 }
 
@@ -152,61 +154,37 @@ function displayEvents(eventList) {
 
     emptyMessage.hidden = eventList.length !== 0;
 
+    resultCount.textContent = `Showing ${eventList.length} of ${events.length} events`;
+
     eventList.forEach(event => {
 
         const card = document.createElement("article");
 
         card.className = "event-card";
 
+        const d = new Date(event.date);
+        const registered = isRegistered(event.id);
+
         card.innerHTML = `
-
             <div class="event-image-wrapper">
-
-                <img
-                    src="${event.image}"
-                    alt="${event.name}"
-                    class="event-image"
-                >
-
-                <span class="event-category">
-                    ${event.category}
-                </span>
-
+                <img src="${event.image}" alt="${event.name}" class="event-image" loading="lazy">
+                <div class="date-block"><b>${d.getDate()}</b>${d.toLocaleDateString("en-IN", { month: "short" })}</div>
+                <span class="event-category">${event.category}</span>
             </div>
-
             <div class="event-content">
-
-                <p class="event-date">
-                    📅 ${formatDate(event.date)}
-                </p>
-
                 <h3>${event.name}</h3>
-
-                <p class="event-description">
-                    ${event.description}
-                </p>
-
-                <p class="event-location">
-                    📍 ${event.venue}
-                </p>
-
+                <p class="event-description">${event.description}</p>
+                <p class="event-location">${event.venue}, ${event.location}</p>
                 <div class="event-footer">
-
-                    <span class="event-countdown">
-                        ⏳ ${getCountdown(event.date)}
-                    </span>
-
-                    <button
-                        class="details-btn"
-                        data-event-id="${event.id}"
-                    >
-                        View Details ↗
+                    <div>
+                        <span class="event-price">${event.price}</span>
+                        <span class="event-countdown">${getCountdown(event.date)}</span>
+                    </div>
+                    <button class="details-btn${registered ? " is-registered" : ""}" data-event-id="${event.id}">
+                        ${registered ? "Registered" : "Details"}
                     </button>
-
                 </div>
-
             </div>
-
         `;
 
         eventsGrid.appendChild(card);
@@ -322,36 +300,17 @@ function openEventDetails(eventId) {
             class="modal-event-image"
         >
 
-        <p class="event-date">
-            ${selectedEvent.category}
-        </p>
+        <p class="event-date">${selectedEvent.category}</p>
 
         <h2>${selectedEvent.name}</h2>
 
-        <p>
-            ${selectedEvent.description}
-        </p>
+        <p>${selectedEvent.description}</p>
 
-        <br>
-
-        <p>
-            📅 <strong>Date:</strong>
-            ${formatDate(selectedEvent.date)}
-        </p>
-
-        <br>
-
-        <p>
-            📍 <strong>Venue:</strong>
-            ${selectedEvent.venue}
-        </p>
-
-        <br>
-
-        <p>
-            🎟️ <strong>Price:</strong>
-            ${selectedEvent.price}
-        </p>
+        <dl class="facts">
+            <div><dt>Date</dt><dd>${formatDate(selectedEvent.date)}</dd></div>
+            <div><dt>Venue</dt><dd>${selectedEvent.venue}</dd></div>
+            <div><dt>Price</dt><dd>${selectedEvent.price}</dd></div>
+        </dl>
 
         <div class="modal-actions">
 
@@ -359,7 +318,7 @@ function openEventDetails(eventId) {
                 class="primary-btn"
                 id="registerButton"
             >
-                Register Now ↗
+                Register
             </button>
 
             <button
@@ -415,7 +374,7 @@ function openRegistrationForm(selectedEvent) {
 
     modalContent.innerHTML = `
 
-        <p class="eyebrow">JOIN THE EXPERIENCE</p>
+        
 
         <h2>Event Registration</h2>
 
@@ -506,7 +465,7 @@ function openRegistrationForm(selectedEvent) {
 
 
             <button type="submit" class="primary-btn">
-                Confirm Registration ↗
+                Confirm registration
             </button>
 
         </form>
@@ -647,6 +606,8 @@ function openRegistrationForm(selectedEvent) {
 
         showSuccess(registration);
 
+        syncRegistrations();
+
     });
 
 }
@@ -663,10 +624,10 @@ function showSuccess(registration) {
         <div class="success-message">
 
             <div class="success-icon">
-                ✅
+                ✓
             </div>
 
-            <h2>Registration Successful!</h2>
+            <h2>You're registered</h2>
 
             <p>
                 Thank you, ${registration.name}!
@@ -754,7 +715,7 @@ function updateThemeButton() {
 
     const lightMode = document.body.classList.contains("light-theme");
 
-    themeToggle.textContent = lightMode ? "🌙" : "☀️";
+    themeToggle.textContent = lightMode ? "Dark" : "Light";
 
     themeToggle.setAttribute(
         "aria-label",
@@ -881,7 +842,7 @@ function showRegistrations() {
 
                 <h2>My Registrations</h2>
 
-                <h3>🎟️ No Registrations Yet</h3>
+                <h3>No registrations yet</h3>
 
                 <p>
                     You haven't registered for any events.
@@ -1046,10 +1007,99 @@ modalContent.addEventListener("click", function(event) {
 
     showRegistrations();
 
+    syncRegistrations();
+
+    toast("Registration cancelled");
+
 });
 
 /* ====================================
    19. INITIALIZE WEBSITE
 ==================================== */
 
-displayEvents(events);
+/* ====================================
+   20. EXTRAS: registered state, toast,
+   live countdown ticket, nav highlight
+==================================== */
+
+function getRegistrations() {
+    try {
+        const list = JSON.parse(localStorage.getItem("eventRegistrations") || "[]");
+        return Array.isArray(list) ? list : [];
+    } catch (error) {
+        return [];
+    }
+}
+
+function isRegistered(id) {
+    return getRegistrations().some(r => r.eventId === id);
+}
+
+function syncRegistrations() {
+    const count = getRegistrations().length;
+    if (count) registrationsLink.setAttribute("data-count", count);
+    else registrationsLink.removeAttribute("data-count");
+    searchEvents();
+}
+
+function toast(message) {
+    const el = document.createElement("div");
+    el.className = "toast";
+    el.setAttribute("role", "status");
+    el.textContent = message;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 2600);
+}
+
+// Hero ticket: counts down to the next upcoming event
+const ticket = document.getElementById("heroTicket");
+const nextEvent = events
+    .filter(e => new Date(e.date) > new Date())
+    .sort((a, b) => new Date(a.date) - new Date(b.date))[0];
+
+if (!nextEvent) {
+    ticket.hidden = true;
+} else {
+    document.getElementById("tImg").style.backgroundImage = `url("${nextEvent.image}")`;
+    document.getElementById("tName").textContent = nextEvent.name;
+    document.getElementById("tMeta").textContent =
+        new Date(nextEvent.date).toLocaleString("en-IN", {
+            weekday: "short", day: "numeric", month: "short", hour: "numeric", minute: "2-digit"
+        }) + ", " + nextEvent.venue;
+    document.getElementById("tOpen").addEventListener("click", () => openEventDetails(nextEvent.id));
+
+    const clock = document.getElementById("tClock");
+    const tick = () => {
+        const s = Math.max(0, Math.floor((new Date(nextEvent.date) - new Date()) / 1000));
+        clock.innerHTML = [["days", Math.floor(s / 86400)], ["hours", Math.floor(s % 86400 / 3600)],
+            ["min", Math.floor(s % 3600 / 60)], ["sec", s % 60]]
+            .map(([label, v]) => `<div><b>${String(v).padStart(2, "0")}</b><span>${label}</span></div>`)
+            .join("");
+    };
+    tick();
+    setInterval(tick, 1000);
+
+    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        ticket.addEventListener("pointermove", e => {
+            const r = ticket.getBoundingClientRect();
+            ticket.style.setProperty("--ry", ((e.clientX - r.left) / r.width - 0.5) * 10 + "deg");
+            ticket.style.setProperty("--rx", (0.5 - (e.clientY - r.top) / r.height) * 10 + "deg");
+        });
+        ticket.addEventListener("pointerleave", () => {
+            ticket.style.setProperty("--rx", "0deg");
+            ticket.style.setProperty("--ry", "0deg");
+        });
+    }
+}
+
+// Highlight the nav link for the section in view
+const spy = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+        if (!en.isIntersecting) return;
+        document.querySelectorAll(".nav-links a").forEach(a =>
+            a.classList.toggle("active", a.getAttribute("href") === "#" + en.target.id));
+    });
+}, { rootMargin: "-45% 0px -50% 0px" });
+["home", "events", "about"].forEach(id => spy.observe(document.getElementById(id)));
+
+syncRegistrations();
