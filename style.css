@@ -1946,3 +1946,34 @@ h3 {
         transition-duration: .01ms !important;
     }
 }
+
+/* ================================
+   CUSTOM EVENTORA LOGO
+================================ */
+
+.logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--brand);
+    font-size: 29px;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    white-space: nowrap;
+}
+
+.logo-symbol {
+    width: 36px;
+    height: 36px;
+    color: var(--accent);
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover .logo-symbol {
+    transform: rotate(-8deg) scale(1.08);
+}
+
+.logo .brand-period {
+    color: var(--accent-text);
+}
