@@ -1,130 +1,778 @@
 <!DOCTYPE html>
-
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <meta name="description" content="Discover exciting events, explore new experiences, and book your next adventure with Eventora.">
 
-<title>Eventora | Discover Extraordinary Events</title>
+    <meta name="theme-color" content="#f3efe5">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+    <title>Eventora | Discover Extraordinary Events</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
 
 </head>
+
 <body>
 
-<!-- Navigation Bar -->
-<header class="navbar">
-    <a href="#" class="logo">Event<span>ora</span></a>
+    <!-- Skip Navigation -->
+    <a class="skip-link" href="#events">
+        Skip to events
+    </a>
 
-    <nav class="nav-links" id="navLinks">
-    <a href="#home">Home</a>
-    <a href="#events">Explore Events</a>
-    <a href="#" id="registrationsLink">My Registrations</a>
-    <a href="#about">About</a>
-</nav>
 
-    <div class="nav-actions">
-        <button id="themeToggle" class="theme-toggle" aria-label="Toggle color theme">
-            Light
-        </button>
+    <!-- ================================
+         NAVIGATION BAR
+    ================================= -->
 
-        <a href="#events" class="nav-btn">Browse events</a>
+    <header class="navbar">
 
-        <button id="menuToggle" class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
-            ☰
-        </button>
-    </div>
-</header>
+        <a href="#home" class="logo">
+            Eventora<span class="brand-period">.</span>
+        </a>
 
-<!-- Hero Section -->
-<main>
-    <section class="hero" id="home">
-        <div class="hero-content">
-            <h1>Find something worth showing up for.</h1>
-            <p class="hero-description">
-                Conferences, concerts and workshops across Bhubaneswar and Cuttack.
-                Pick one, register in a minute, and your spot is saved in this browser.
-            </p>
-            <div class="hero-actions">
-                <a href="#events" class="primary-btn">Browse events</a>
-                <a href="#about" class="secondary-btn">About Eventora</a>
-            </div>
-        </div>
+        <nav class="nav-links" id="navLinks">
 
-        <div class="ticket" id="heroTicket">
-            <div class="ticket-img" id="tImg"></div>
-            <div class="ticket-body">
-                <p>Next event</p>
-                <h2 id="tName"></h2>
-                <p id="tMeta"></p>
-            </div>
-            <div class="ticket-clock" id="tClock"></div>
-            <button class="details-btn" id="tOpen">See details</button>
-        </div>
-    </section>
+            <a href="#home">Home</a>
 
-    <!-- Events Section -->
-    <section class="events-section" id="events">
-        <div class="section-heading">
-            <div>
-                <h2>Upcoming events</h2>
-                <p>Search by name or place, or filter by type.</p>
-            </div>
-        </div>
+            <a href="#events">Explore Events</a>
 
-        <!-- Search and Filters -->
-        <div class="event-controls">
-            <input
-                type="search"
-                id="searchInput"
-                placeholder="Search by name or place"
-                aria-label="Search events"
+            <a href="#" id="registrationsLink">
+                My Registrations
+            </a>
+
+            <a href="#about">About</a>
+
+        </nav>
+
+        <div class="nav-actions">
+
+            <button
+                id="themeToggle"
+                class="theme-toggle"
+                aria-label="Toggle color theme"
+                aria-pressed="false"
             >
+                Dark
+            </button>
 
-            <div class="category-filters" id="categoryFilters">
-                <button class="filter-btn active" data-category="All">All Events</button>
-                <button class="filter-btn" data-category="Technology">Technology</button>
-                <button class="filter-btn" data-category="Music">Music</button>
-                <button class="filter-btn" data-category="Workshop">Workshops</button>
-                <button class="filter-btn" data-category="Business">Business</button>
+            <a href="#events" class="nav-btn">
+                Browse Events <span aria-hidden="true">↗</span>
+            </a>
+
+            <button
+                id="menuToggle"
+                class="menu-toggle"
+                aria-label="Toggle navigation"
+                aria-expanded="false"
+            >
+                ☰
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================================
+         MAIN CONTENT
+    ================================= -->
+
+    <main>
+
+
+        <!-- ================================
+             HERO SECTION
+        ================================= -->
+
+        <section class="hero" id="home">
+
+            <div class="hero-topline">
+
+                <p class="eyebrow">
+                    <span class="status-dot"></span>
+                    BHUBANESWAR &amp; CUTTACK
+                </p>
+
+                <p class="eyebrow hero-location">
+                    OUT THERE, TOGETHER · 2026
+                </p>
+
             </div>
+
+
+            <div class="hero-title-row">
+
+                <div>
+
+                    <h1>
+                        Find something worth
+                        <span>showing</span>
+                        up for<span class="title-period">.</span>
+                    </h1>
+
+                </div>
+
+
+                <div class="hero-aside">
+
+                    <span class="hero-asterisk" aria-hidden="true">
+                        ✳
+                    </span>
+
+                    <p>
+                        Good events bring people together.
+                        Discover something new, meet new people
+                        and create memories.
+                    </p>
+
+                    <a href="#events" class="text-link">
+                        Explore events
+                        <span aria-hidden="true">↗</span>
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Hero Image -->
+
+            <div class="hero-stage">
+
+                <img
+                    src="https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=1800&q=85"
+                    alt="People enjoying a live music event"
+                    class="hero-photo"
+                >
+
+                <div class="stage-overlay"></div>
+
+
+                <div class="stage-caption">
+
+                    <p class="eyebrow">
+                        LESS SCROLLING. MORE LIVING.
+                    </p>
+
+                    <p>
+                        Your next great<br>
+                        memory starts here.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="#events"
+                    class="round-link"
+                    aria-label="Explore upcoming events"
+                >
+                    ↘
+                </a>
+
+
+                <!-- Upcoming Event Ticket -->
+
+                <div class="ticket" id="heroTicket">
+
+                    <div class="ticket-top">
+
+                        <span class="eyebrow">
+                            EVENTORA
+                        </span>
+
+                        <span class="eyebrow">
+                            UP NEXT · 001
+                        </span>
+
+                    </div>
+
+
+                    <div class="ticket-img" id="tImg"></div>
+
+
+                    <div class="ticket-body">
+
+                        <p>YOUR NEXT EXPERIENCE</p>
+
+                        <h2 id="tName"></h2>
+
+                        <p id="tMeta"></p>
+
+                    </div>
+
+
+                    <div
+                        class="ticket-clock"
+                        id="tClock"
+                        aria-label="Countdown to next event"
+                    ></div>
+
+
+                    <button
+                        class="details-btn"
+                        id="tOpen"
+                        type="button"
+                    >
+                        See event details ↗
+                    </button>
+
+
+                    <div class="ticket-stub">
+
+                        <span>MAKE IT A DAY TO REMEMBER</span>
+
+                        <span class="barcode" aria-hidden="true"></span>
+
+                    </div>
+
+                </div>
+
+
+                <span class="photo-index">
+                    EVENTORA / EXPERIENCE NO. 001
+                </span>
+
+            </div>
+
+
+            <div class="hero-bottom">
+
+                <span>
+                    GOOD PEOPLE. GREAT EXPERIENCES.
+                </span>
+
+                <a href="#events">
+                    FIND YOUR NEXT PLAN
+                    <span aria-hidden="true">↓</span>
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================
+             MOVING TEXT SECTION
+        ================================= -->
+
+        <section class="ticker" aria-label="Eventora experiences">
+
+            <div class="ticker-track">
+
+                <span>GOOD PEOPLE</span>
+                <b>✳</b>
+
+                <span>GREAT EXPERIENCES</span>
+                <b>✳</b>
+
+                <span>RIGHT HERE</span>
+                <b>✳</b>
+
+                <span>MAKE MEMORIES</span>
+                <b>✳</b>
+
+                <span>GOOD PEOPLE</span>
+                <b>✳</b>
+
+                <span>GREAT EXPERIENCES</span>
+                <b>✳</b>
+
+                <span>RIGHT HERE</span>
+                <b>✳</b>
+
+                <span>MAKE MEMORIES</span>
+                <b>✳</b>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================
+             DISCOVER BY CATEGORY
+        ================================= -->
+
+        <section class="discovery-section">
+
+            <div class="discovery-intro">
+
+                <p class="eyebrow">
+                    FIND YOUR KIND OF FUN
+                </p>
+
+                <h2>
+                    Something for
+                    <em>everyone.</em>
+                </h2>
+
+                <p>
+                    From learning something new to enjoying
+                    unforgettable evenings, find an experience
+                    that matches your interests.
+                </p>
+
+            </div>
+
+
+            <div class="discovery-options">
+
+
+                <button
+                    class="discovery-option"
+                    type="button"
+                    data-discover="Technology"
+                >
+
+                    <span class="discovery-number">01</span>
+
+                    <span class="discovery-name">
+                        Technology
+
+                        <small>
+                            Innovation, AI and future ideas
+                        </small>
+                    </span>
+
+                    <span class="discovery-symbol">↗</span>
+
+                </button>
+
+
+                <button
+                    class="discovery-option"
+                    type="button"
+                    data-discover="Music"
+                >
+
+                    <span class="discovery-number">02</span>
+
+                    <span class="discovery-name">
+                        Music
+
+                        <small>
+                            Live shows and unforgettable nights
+                        </small>
+                    </span>
+
+                    <span class="discovery-symbol">↗</span>
+
+                </button>
+
+
+                <button
+                    class="discovery-option"
+                    type="button"
+                    data-discover="Workshop"
+                >
+
+                    <span class="discovery-number">03</span>
+
+                    <span class="discovery-name">
+                        Workshops
+
+                        <small>
+                            Learn, create and improve
+                        </small>
+                    </span>
+
+                    <span class="discovery-symbol">↗</span>
+
+                </button>
+
+
+                <button
+                    class="discovery-option"
+                    type="button"
+                    data-discover="Business"
+                >
+
+                    <span class="discovery-number">04</span>
+
+                    <span class="discovery-name">
+                        Business
+
+                        <small>
+                            Networking and entrepreneurship
+                        </small>
+                    </span>
+
+                    <span class="discovery-symbol">↗</span>
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================
+             EVENTS SECTION
+        ================================= -->
+
+        <section class="events-section" id="events">
+
+
+            <div class="section-heading">
+
+                <div>
+
+                    <p class="eyebrow">
+                        MAKE ROOM FOR SOMETHING GOOD
+                    </p>
+
+                    <h2>
+                        YOUR CITY.
+                        <span>YOUR NEXT PLAN.</span>
+                    </h2>
+
+                </div>
+
+
+                <p class="heading-note">
+
+                    Discover events happening
+                    around Bhubaneswar and Cuttack.
+
+                </p>
+
+            </div>
+
+
+            <!-- Featured Event -->
+
+            <article
+                class="featured-event"
+                id="featuredEvent"
+                hidden
+            ></article>
+
+
+            <!-- Event Catalogue Heading -->
+
+            <div class="catalogue-title">
+
+                <div>
+
+                    <p class="eyebrow">
+                        THE EVENT COLLECTION
+                    </p>
+
+                    <h3>Explore Upcoming Events</h3>
+
+                </div>
+
+            </div>
+
+
+            <!-- Search and Category Filters -->
+
+            <div class="event-controls">
+
+
+                <div class="search-wrap">
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+
+                        <circle
+                            cx="11"
+                            cy="11"
+                            r="7"
+                        ></circle>
+
+                        <path d="m16 16 5 5"></path>
+
+                    </svg>
+
+
+                    <input
+                        type="search"
+                        id="searchInput"
+                        placeholder="Search by event name or location..."
+                        aria-label="Search events"
+                    >
+
+                </div>
+
+
+                <div
+                    class="category-filters"
+                    id="categoryFilters"
+                >
+
+                    <button
+                        class="filter-btn active"
+                        data-category="All"
+                        aria-pressed="true"
+                    >
+                        All Events
+                    </button>
+
+                    <button
+                        class="filter-btn"
+                        data-category="Technology"
+                        aria-pressed="false"
+                    >
+                        Technology
+                    </button>
+
+                    <button
+                        class="filter-btn"
+                        data-category="Music"
+                        aria-pressed="false"
+                    >
+                        Music
+                    </button>
+
+                    <button
+                        class="filter-btn"
+                        data-category="Workshop"
+                        aria-pressed="false"
+                    >
+                        Workshops
+                    </button>
+
+                    <button
+                        class="filter-btn"
+                        data-category="Business"
+                        aria-pressed="false"
+                    >
+                        Business
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Catalogue Information -->
+
+            <div class="catalogue-meta">
+
+                <p
+                    id="resultCount"
+                    aria-live="polite"
+                >
+                    Showing upcoming events
+                </p>
+
+
+                <button
+                    id="resetFilters"
+                    type="button"
+                >
+                    RESET FILTERS ↺
+                </button>
+
+            </div>
+
+
+            <!-- Dynamic Event Cards -->
+
+            <div class="events-grid" id="eventsGrid">
+
+                <p>Loading events...</p>
+
+            </div>
+
+
+            <!-- Empty Search Message -->
+
+            <div class="empty-message" id="emptyMessage" hidden>
+
+                <div class="empty-symbol" aria-hidden="true">
+                    ✳
+                </div>
+
+                <h3>No events found.</h3>
+
+                <p>
+                    Try another search or select a different category.
+                </p>
+
+                <button
+                    class="primary-btn"
+                    id="emptyResetButton"
+                    type="button"
+                >
+                    Explore all events
+                </button>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ================================
+             ABOUT SECTION
+        ================================= -->
+
+        <section class="about-section" id="about">
+
+
+            <div class="about-photo">
+
+                <img
+                    src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1000&q=85"
+                    alt="Friends enjoying an event together"
+                    loading="lazy"
+                >
+
+                <p class="photo-label">
+                    OUT THERE.<br>
+                    TOGETHER.
+                </p>
+
+                <span class="photo-seal" aria-hidden="true">
+                    ✳
+                </span>
+
+            </div>
+
+
+            <div class="about-copy">
+
+                <p class="eyebrow">
+                    A LITTLE CLOSER TO YOUR CITY
+                </p>
+
+
+                <h2>
+                    Go out.<br>
+                    Come back with
+                    <em>a story.</em>
+                </h2>
+
+
+                <p>
+                    Eventora makes discovering local events simple.
+                    Explore concerts, workshops, technology events
+                    and business experiences around your city.
+                </p>
+
+
+                <p>
+                    Find something interesting, register with your
+                    details and keep track of your registrations
+                    through your personal dashboard.
+                </p>
+
+
+                <a href="#events" class="text-link">
+                    Find your next event
+                    <span aria-hidden="true">↗</span>
+                </a>
+
+
+                <p class="registration-note">
+                    Registration information is saved locally
+                    in your browser.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================================
+             CLOSING SECTION
+        ================================= -->
+
+        <section class="closing-section">
+
+            <p class="eyebrow">
+                YOUR NEXT EXPERIENCE IS WAITING
+            </p>
+
+            <span class="closing-star" aria-hidden="true">
+                ✳
+            </span>
+
+            <h2>
+                <span>GET</span><br>
+                OUT THERE.
+            </h2>
+
+            <a href="#events" class="primary-btn">
+                EXPLORE EVENTS
+                <span aria-hidden="true">↗</span>
+            </a>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- ================================
+         FOOTER
+    ================================= -->
+
+    <footer class="footer">
+
+
+        <div class="footer-top">
+
+            <a href="#home" class="logo">
+                Eventora<span class="brand-period">.</span>
+            </a>
+
+
+            <p>
+                Bringing people and experiences together.
+                <br>
+                Events across Bhubaneswar and Cuttack.
+            </p>
+
+
+            <a href="#home" class="back-top">
+                BACK TO TOP
+                <span aria-hidden="true">↑</span>
+            </a>
+
         </div>
 
-        <p class="result-count" id="resultCount" aria-live="polite"></p>
 
-        <!-- JavaScript will insert event cards here -->
-        <div class="events-grid" id="eventsGrid">
-            <p>Loading events...</p>
+        <div class="footer-bottom">
+
+            <p>
+                &copy; 2026 Eventora. All rights reserved.
+            </p>
+
+            <p>
+                Designed and developed by PixelPulse.
+            </p>
+
+            <p>
+                Built with HTML, CSS and JavaScript.
+            </p>
+
         </div>
 
-        <p class="empty-message" id="emptyMessage" hidden>
-            No events found. Try another search or category.
-        </p>
-    </section>
 
-    <!-- About Section -->
-    <section class="about-section" id="about">
-        <h2>A simple way to find events and save your seat.</h2>
-        <p>
-            Browse what's on, register with your name, email and phone,
-            and see everything you've booked under My Registrations.
-        </p>
-        <a href="#events" class="primary-btn">Find an event</a>
-    </section>
-</main>
+    </footer>
 
-<!-- Footer -->
-<footer class="footer">
-    <a href="#home" class="logo">Event<span>ora</span></a>
-    <p>Events in Bhubaneswar and Cuttack.</p>
-    <p>&copy; 2026 Eventora. Built with HTML, CSS and JavaScript.</p>
-</footer>
 
-<script src="script.js"></script>
+    <!-- ================================
+         JAVASCRIPT
+    ================================= -->
+
+    <script src="script.js"></script>
 
 </body>
+
 </html>

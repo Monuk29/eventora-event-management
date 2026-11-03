@@ -14,7 +14,7 @@ const events = [
         venue: "Bhubaneswar Convention Centre",
         location: "Bhubaneswar",
         price: "₹499",
-        image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800",
+        image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1200&q=85",
         description: "Explore the future of artificial intelligence, web development, robotics and emerging technologies. Meet industry professionals and technology enthusiasts."
     },
 
@@ -26,7 +26,7 @@ const events = [
         venue: "Open Air Auditorium",
         location: "Bhubaneswar",
         price: "₹799",
-        image: "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=800",
+        image: "https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=1200&q=85",
         description: "Experience an unforgettable musical evening featuring live performances, talented artists and an energetic atmosphere."
     },
 
@@ -38,7 +38,7 @@ const events = [
         venue: "Innovation Hub",
         location: "Bhubaneswar",
         price: "₹299",
-        image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800",
+        image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=85",
         description: "Learn modern web development techniques, build interactive websites and explore practical frontend development."
     },
 
@@ -50,7 +50,7 @@ const events = [
         venue: "Business Tower",
         location: "Cuttack",
         price: "₹599",
-        image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800",
+        image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1200&q=85",
         description: "Connect with entrepreneurs, discover innovative startups and learn how to transform ideas into successful businesses."
     },
 
@@ -62,7 +62,7 @@ const events = [
         venue: "KIIT Conference Hall",
         location: "Bhubaneswar",
         price: "₹399",
-        image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800",
+        image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1200&q=85",
         description: "Discover how artificial intelligence and machine learning are transforming industries and shaping our future."
     },
 
@@ -74,7 +74,7 @@ const events = [
         venue: "Learning Centre",
         location: "Bhubaneswar",
         price: "₹249",
-        image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800",
+        image: "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=85",
         description: "Learn social media marketing, content strategy, SEO and other essential digital marketing skills."
     }
 
@@ -167,23 +167,51 @@ function displayEvents(eventList) {
 
         card.innerHTML = `
             <div class="event-image-wrapper">
-                <img src="${event.image}" alt="${event.name}" class="event-image" loading="lazy">
-                <div class="date-block"><b>${d.getDate()}</b>${d.toLocaleDateString("en-IN", { month: "short" })}</div>
-                <span class="event-category">${event.category}</span>
-            </div>
-            <div class="event-content">
-                <h3>${event.name}</h3>
-                <p class="event-description">${event.description}</p>
-                <p class="event-location">${event.venue}, ${event.location}</p>
-                <div class="event-footer">
-                    <div>
-                        <span class="event-price">${event.price}</span>
-                        <span class="event-countdown">${getCountdown(event.date)}</span>
-                    </div>
-                    <button class="details-btn${registered ? " is-registered" : ""}" data-event-id="${event.id}">
-                        ${registered ? "Registered" : "Details"}
-                    </button>
+                <img src="${event.image}" alt="${event.name}" class="event-image" loading="lazy" width="800" height="533">
+
+                <div class="date-block">
+                    <b>${d.getDate()}</b>
+                    ${d.toLocaleDateString("en-IN", { month: "short" })}
                 </div>
+
+                <span class="event-category">
+                    ${event.category}
+                </span>
+            </div>
+
+            <div class="event-content">
+
+                <h3>${event.name}</h3>
+
+                <p class="event-description">
+                    ${event.description}
+                </p>
+
+                <p class="event-location">
+                    ${event.venue}, ${event.location}
+                </p>
+
+                <div class="event-footer">
+
+                    <div>
+                        <span class="event-price">
+                            ${event.price}
+                        </span>
+
+                        <span class="event-countdown">
+                            ${getCountdown(event.date)}
+                        </span>
+                    </div>
+
+                    <button
+                        class="details-btn${registered ? " is-registered" : ""}"
+                        data-event-id="${event.id}"
+                    >
+                        ${registered ? "Registered ✓" : "View event ↗"}
+                    </button>
+
+                </div>
+
             </div>
         `;
 
@@ -202,9 +230,31 @@ function searchEvents() {
 
     const searchValue = searchInput.value.toLowerCase().trim();
 
-    const activeCategory = document.querySelector(
-        ".filter-btn.active"
-    ).dataset.category;
+    const activeFilter = document.querySelector(".filter-btn.active");
+
+    const activeCategory = activeFilter
+        ? activeFilter.dataset.category
+        : "All";
+
+    document.querySelectorAll(".filter-btn").forEach(button => {
+
+        button.setAttribute(
+            "aria-pressed",
+            String(button.dataset.category === activeCategory)
+        );
+
+    });
+
+    const spotlight = document.getElementById("featuredEvent");
+
+    if (spotlight) {
+
+        spotlight.hidden =
+            searchValue !== "" ||
+            activeCategory !== "All" ||
+            !spotlight.childElementCount;
+
+    }
 
     const filteredEvents = events.filter(event => {
 
@@ -265,7 +315,11 @@ modalOverlay.innerHTML = `
 
     <div class="modal-panel" id="modalPanel">
 
-        <button class="modal-close" id="modalClose" aria-label="Close modal">
+        <button
+            class="modal-close"
+            id="modalClose"
+            aria-label="Close modal"
+        >
             &times;
         </button>
 
@@ -300,16 +354,31 @@ function openEventDetails(eventId) {
             class="modal-event-image"
         >
 
-        <p class="event-date">${selectedEvent.category}</p>
+        <p class="event-date">
+            ${selectedEvent.category}
+        </p>
 
         <h2>${selectedEvent.name}</h2>
 
         <p>${selectedEvent.description}</p>
 
         <dl class="facts">
-            <div><dt>Date</dt><dd>${formatDate(selectedEvent.date)}</dd></div>
-            <div><dt>Venue</dt><dd>${selectedEvent.venue}</dd></div>
-            <div><dt>Price</dt><dd>${selectedEvent.price}</dd></div>
+
+            <div>
+                <dt>Date</dt>
+                <dd>${formatDate(selectedEvent.date)}</dd>
+            </div>
+
+            <div>
+                <dt>Venue</dt>
+                <dd>${selectedEvent.venue}</dd>
+            </div>
+
+            <div>
+                <dt>Price</dt>
+                <dd>${selectedEvent.price}</dd>
+            </div>
+
         </dl>
 
         <div class="modal-actions">
@@ -339,7 +408,9 @@ function openEventDetails(eventId) {
     document.getElementById("registerButton").addEventListener(
         "click",
         function() {
+
             openRegistrationForm(selectedEvent);
+
         }
     );
 
@@ -374,11 +445,11 @@ function openRegistrationForm(selectedEvent) {
 
     modalContent.innerHTML = `
 
-        
-
         <h2>Event Registration</h2>
 
-        <p>Complete your details to register for the event.</p>
+        <p>
+            Complete your details to register for the event.
+        </p>
 
         <form class="registration-form" id="registrationForm">
 
@@ -590,16 +661,43 @@ function openRegistrationForm(selectedEvent) {
 
         // Save registration in Local Storage
 
-        let registrations = JSON.parse(
-            localStorage.getItem("eventRegistrations") || "[]"
+        const registrations = getRegistrations();
+
+
+        // Prevent duplicate registration
+
+        const alreadyRegistered = registrations.some(item =>
+            item.eventId === registeredEvent.id &&
+            String(item.email).toLowerCase() === email.toLowerCase()
         );
+
+        if (alreadyRegistered) {
+
+            document.getElementById("emailError").textContent =
+                "This email is already registered for this event.";
+
+            return;
+
+        }
+
 
         registrations.push(registration);
 
-        localStorage.setItem(
-            "eventRegistrations",
-            JSON.stringify(registrations)
-        );
+        try {
+
+            localStorage.setItem(
+                "eventRegistrations",
+                JSON.stringify(registrations)
+            );
+
+        } catch (error) {
+
+            document.getElementById("emailError").textContent =
+                "Your browser could not save the registration. Please check Local Storage settings.";
+
+            return;
+
+        }
 
 
         // Display success message
@@ -630,14 +728,14 @@ function showSuccess(registration) {
             <h2>You're registered</h2>
 
             <p>
-                Thank you, ${registration.name}!
+                Thank you, ${escapeHTML(registration.name)}!
             </p>
 
             <br>
 
             <p>
                 You have successfully registered for
-                <strong>${registration.event}</strong>.
+                <strong>${escapeHTML(registration.event)}</strong>.
             </p>
 
             <br>
@@ -713,37 +811,52 @@ document.addEventListener("keydown", function(event) {
 
 function updateThemeButton() {
 
-    const lightMode = document.body.classList.contains("light-theme");
+    const darkMode = document.body.classList.contains("dark-theme");
 
-    themeToggle.textContent = lightMode ? "Dark" : "Light";
+    themeToggle.textContent = darkMode ? "Light" : "Dark";
 
     themeToggle.setAttribute(
         "aria-label",
-        lightMode ? "Switch to dark mode" : "Switch to light mode"
+        darkMode ? "Switch to light mode" : "Switch to dark mode"
     );
+
+    themeToggle.setAttribute(
+        "aria-pressed",
+        String(darkMode)
+    );
+
+    const themeMeta = document.querySelector(
+        'meta[name="theme-color"]'
+    );
+
+    if (themeMeta) {
+
+        themeMeta.content = darkMode ? "#22231f" : "#f3efe5";
+
+    }
 
 }
 
 
-if (localStorage.getItem("eventoraTheme") === "light") {
+if (localStorage.getItem("eventoraTheme") === "dark") {
 
-    document.body.classList.add("light-theme");
+    document.body.classList.add("dark-theme");
 
 }
 
 updateThemeButton();
 
 
-themeToggle.addEventListener("click", function() {
+themeToggle.addEventListener("click", () => {
 
-    document.body.classList.toggle("light-theme");
+    document.body.classList.toggle("dark-theme");
 
-    const currentTheme =
-        document.body.classList.contains("light-theme")
-        ? "light"
-        : "dark";
-
-    localStorage.setItem("eventoraTheme", currentTheme);
+    localStorage.setItem(
+        "eventoraTheme",
+        document.body.classList.contains("dark-theme")
+            ? "dark"
+            : "light"
+    );
 
     updateThemeButton();
 
@@ -779,8 +892,9 @@ document.querySelectorAll(".nav-links a").forEach(link => {
 
 });
 
+
 /* ====================================
-   18. MY REGISTRATIONS DASHBOARD
+   17. MY REGISTRATIONS DASHBOARD
 ==================================== */
 
 // Open My Registrations
@@ -817,7 +931,9 @@ function showRegistrations() {
         );
 
         if (!Array.isArray(registrations)) {
+
             registrations = [];
+
         }
 
     } catch (error) {
@@ -948,6 +1064,10 @@ function showRegistrations() {
 }
 
 
+/* ====================================
+   18. HTML ESCAPE FUNCTION
+==================================== */
+
 // Prevent user-provided text from being treated as HTML
 
 function escapeHTML(value) {
@@ -955,11 +1075,13 @@ function escapeHTML(value) {
     return String(value).replace(/[&<>"']/g, character => {
 
         const entities = {
+
             "&": "&amp;",
             "<": "&lt;",
             ">": "&gt;",
             '"': "&quot;",
             "'": "&#39;"
+
         };
 
         return entities[character];
@@ -969,7 +1091,9 @@ function escapeHTML(value) {
 }
 
 
-// Remove individual registration
+/* ====================================
+   19. CANCEL REGISTRATION
+==================================== */
 
 modalContent.addEventListener("click", function(event) {
 
@@ -988,19 +1112,27 @@ modalContent.addEventListener("click", function(event) {
     if (!confirmCancel) return;
 
 
-    let registrations = JSON.parse(
-        localStorage.getItem("eventRegistrations") || "[]"
-    );
+    let registrations = getRegistrations();
 
     registrations = registrations.filter(
         registration => registration.id !== registrationId
     );
 
 
-    localStorage.setItem(
-        "eventRegistrations",
-        JSON.stringify(registrations)
-    );
+    try {
+
+        localStorage.setItem(
+            "eventRegistrations",
+            JSON.stringify(registrations)
+        );
+
+    } catch (error) {
+
+        toast("Could not update registrations. Please try again.");
+
+        return;
+
+    }
 
 
     // Refresh dashboard
@@ -1013,93 +1145,558 @@ modalContent.addEventListener("click", function(event) {
 
 });
 
-/* ====================================
-   19. INITIALIZE WEBSITE
-==================================== */
 
 /* ====================================
-   20. EXTRAS: registered state, toast,
-   live countdown ticket, nav highlight
+   20. REGISTRATION STORAGE
 ==================================== */
 
 function getRegistrations() {
+
     try {
-        const list = JSON.parse(localStorage.getItem("eventRegistrations") || "[]");
+
+        const list = JSON.parse(
+            localStorage.getItem("eventRegistrations") || "[]"
+        );
+
         return Array.isArray(list) ? list : [];
+
     } catch (error) {
+
+        console.warn(
+            "Could not read saved registrations:",
+            error
+        );
+
         return [];
+
     }
+
 }
+
+
+// Check whether an event is already registered
 
 function isRegistered(id) {
-    return getRegistrations().some(r => r.eventId === id);
+
+    return getRegistrations().some(
+        registration => registration.eventId === id
+    );
+
 }
+
+
+// Synchronize registration count and event cards
 
 function syncRegistrations() {
+
     const count = getRegistrations().length;
-    if (count) registrationsLink.setAttribute("data-count", count);
-    else registrationsLink.removeAttribute("data-count");
+
+    if (count) {
+
+        registrationsLink.setAttribute("data-count", count);
+
+    } else {
+
+        registrationsLink.removeAttribute("data-count");
+
+    }
+
     searchEvents();
+
 }
+
+
+/* ====================================
+   21. TOAST NOTIFICATIONS
+==================================== */
 
 function toast(message) {
+
     const el = document.createElement("div");
+
     el.className = "toast";
+
     el.setAttribute("role", "status");
+
     el.textContent = message;
+
     document.body.appendChild(el);
+
     setTimeout(() => el.remove(), 2600);
+
 }
 
-// Hero ticket: counts down to the next upcoming event
+
+/* ====================================
+   22. HERO TICKET COUNTDOWN
+==================================== */
+
+// Find the next upcoming event
+
 const ticket = document.getElementById("heroTicket");
+
 const nextEvent = events
-    .filter(e => new Date(e.date) > new Date())
-    .sort((a, b) => new Date(a.date) - new Date(b.date))[0];
+    .filter(event => new Date(event.date) > new Date())
+    .sort(
+        (a, b) => new Date(a.date) - new Date(b.date)
+    )[0];
+
 
 if (!nextEvent) {
+
     ticket.hidden = true;
+
 } else {
-    document.getElementById("tImg").style.backgroundImage = `url("${nextEvent.image}")`;
-    document.getElementById("tName").textContent = nextEvent.name;
+
+    document.getElementById("tImg").style.backgroundImage =
+        `url("${nextEvent.image}")`;
+
+    document.getElementById("tName").textContent =
+        nextEvent.name;
+
     document.getElementById("tMeta").textContent =
+
         new Date(nextEvent.date).toLocaleString("en-IN", {
-            weekday: "short", day: "numeric", month: "short", hour: "numeric", minute: "2-digit"
+
+            weekday: "short",
+            day: "numeric",
+            month: "short",
+            hour: "numeric",
+            minute: "2-digit"
+
         }) + ", " + nextEvent.venue;
-    document.getElementById("tOpen").addEventListener("click", () => openEventDetails(nextEvent.id));
+
+
+    document.getElementById("tOpen").addEventListener(
+        "click",
+        () => openEventDetails(nextEvent.id)
+    );
+
+
+    // Live countdown clock
 
     const clock = document.getElementById("tClock");
+
     const tick = () => {
-        const s = Math.max(0, Math.floor((new Date(nextEvent.date) - new Date()) / 1000));
-        clock.innerHTML = [["days", Math.floor(s / 86400)], ["hours", Math.floor(s % 86400 / 3600)],
-            ["min", Math.floor(s % 3600 / 60)], ["sec", s % 60]]
-            .map(([label, v]) => `<div><b>${String(v).padStart(2, "0")}</b><span>${label}</span></div>`)
+
+        const s = Math.max(
+            0,
+            Math.floor(
+                (new Date(nextEvent.date) - new Date()) / 1000
+            )
+        );
+
+        clock.innerHTML = [
+
+            ["days", Math.floor(s / 86400)],
+
+            ["hours", Math.floor(s % 86400 / 3600)],
+
+            ["min", Math.floor(s % 3600 / 60)],
+
+            ["sec", s % 60]
+
+        ]
+            .map(([label, value]) => `
+
+                <div>
+                    <b>${String(value).padStart(2, "0")}</b>
+                    <span>${label}</span>
+                </div>
+
+            `)
             .join("");
+
     };
+
+
     tick();
+
     setInterval(tick, 1000);
 
-    if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        ticket.addEventListener("pointermove", e => {
+
+    // Interactive ticket animation
+
+    if (
+        matchMedia("(hover: hover) and (pointer: fine)").matches &&
+        !matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+
+        ticket.addEventListener("pointermove", event => {
+
             const r = ticket.getBoundingClientRect();
-            ticket.style.setProperty("--ry", ((e.clientX - r.left) / r.width - 0.5) * 10 + "deg");
-            ticket.style.setProperty("--rx", (0.5 - (e.clientY - r.top) / r.height) * 10 + "deg");
+
+            ticket.style.setProperty(
+                "--ry",
+                ((event.clientX - r.left) / r.width - 0.5) * 10 + "deg"
+            );
+
+            ticket.style.setProperty(
+                "--rx",
+                (0.5 - (event.clientY - r.top) / r.height) * 10 + "deg"
+            );
+
         });
+
+
         ticket.addEventListener("pointerleave", () => {
+
             ticket.style.setProperty("--rx", "0deg");
+
             ticket.style.setProperty("--ry", "0deg");
+
         });
+
     }
+
 }
 
-// Highlight the nav link for the section in view
+
+/* ====================================
+   23. NAVIGATION HIGHLIGHT
+==================================== */
+
+// Highlight the navigation link for the section in view
+
 const spy = new IntersectionObserver(entries => {
-    entries.forEach(en => {
-        if (!en.isIntersecting) return;
-        document.querySelectorAll(".nav-links a").forEach(a =>
-            a.classList.toggle("active", a.getAttribute("href") === "#" + en.target.id));
+
+    entries.forEach(entry => {
+
+        if (!entry.isIntersecting) return;
+
+        document.querySelectorAll(".nav-links a").forEach(link => {
+
+            link.classList.toggle(
+                "active",
+                link.getAttribute("href") === "#" + entry.target.id
+            );
+
+        });
+
     });
-}, { rootMargin: "-45% 0px -50% 0px" });
-["home", "events", "about"].forEach(id => spy.observe(document.getElementById(id)));
+
+}, {
+    rootMargin: "-45% 0px -50% 0px"
+});
+
+
+["home", "events", "about"].forEach(id => {
+
+    const section = document.getElementById(id);
+
+    if (section) {
+
+        spy.observe(section);
+
+    }
+
+});
+
+
+/* ====================================
+   24. INITIALIZE REGISTRATIONS
+==================================== */
 
 syncRegistrations();
+
+
+/* ====================================
+   25. FEATURED EVENT
+==================================== */
+
+// Use an upcoming music event when available
+
+const featuredEvent = document.getElementById("featuredEvent");
+
+const upcomingEvents = events.filter(
+    event => new Date(event.date) > new Date()
+);
+
+const spotlightEvent = upcomingEvents.find(
+    event => event.category === "Music"
+) || upcomingEvents[0];
+
+
+if (spotlightEvent && featuredEvent) {
+
+    featuredEvent.innerHTML = `
+
+        <div class="featured-image-wrap">
+
+            <img
+                src="${spotlightEvent.image}"
+                alt="${spotlightEvent.name}"
+                loading="lazy"
+                class="featured-image"
+            >
+
+        </div>
+
+        <div class="featured-copy">
+
+            <p class="eyebrow">
+                In the spotlight · ${spotlightEvent.category}
+            </p>
+
+            <h3>${spotlightEvent.name}</h3>
+
+            <p>${spotlightEvent.description}</p>
+
+            <p class="featured-meta">
+                ${formatDate(spotlightEvent.date)}
+                <br>
+                ${spotlightEvent.venue}, ${spotlightEvent.location}
+            </p>
+
+            <div class="featured-action">
+
+                <span>
+                    From
+                    <strong>${spotlightEvent.price}</strong>
+                </span>
+
+                <button class="primary-btn" type="button">
+                    View event ↗
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    featuredEvent.querySelector("button").addEventListener(
+        "click",
+        () => openEventDetails(spotlightEvent.id)
+    );
+
+    searchEvents();
+
+}
+
+
+/* ====================================
+   26. MODAL ACCESSIBILITY
+==================================== */
+
+// Keep keyboard navigation inside an open event dialog
+// and restore focus on close.
+
+const dialogPanel = document.getElementById("modalPanel");
+
+dialogPanel.setAttribute("role", "dialog");
+
+dialogPanel.setAttribute("aria-modal", "true");
+
+dialogPanel.setAttribute(
+    "aria-label",
+    "Event information and registrations"
+);
+
+dialogPanel.tabIndex = -1;
+
+
+let previousFocus;
+
+
+new MutationObserver(() => {
+
+    if (!modalOverlay.hidden) {
+
+        previousFocus = document.activeElement;
+
+        dialogPanel.focus();
+
+    } else if (previousFocus instanceof HTMLElement) {
+
+        previousFocus.focus();
+
+    }
+
+}).observe(modalOverlay, {
+
+    attributes: true,
+
+    attributeFilter: ["hidden"]
+
+});
+
+
+modalOverlay.addEventListener("keydown", event => {
+
+    if (event.key !== "Tab") return;
+
+    const focusable = [
+
+        ...dialogPanel.querySelectorAll(
+            'button, a[href], input, select, [tabindex="0"]'
+        )
+
+    ].filter(element => {
+
+        return !element.disabled &&
+            element.getClientRects().length;
+
+    });
+
+
+    const first = focusable[0];
+
+    const last = focusable[focusable.length - 1];
+
+
+    if (!first) {
+
+        event.preventDefault();
+
+        return;
+
+    }
+
+
+    if (
+        event.shiftKey &&
+        (
+            document.activeElement === first ||
+            document.activeElement === dialogPanel
+        )
+    ) {
+
+        event.preventDefault();
+
+        last.focus();
+
+    } else if (
+        !event.shiftKey &&
+        document.activeElement === last
+    ) {
+
+        event.preventDefault();
+
+        first.focus();
+
+    }
+
+});
+
+
+/* ====================================
+   27. CATEGORY SHORTCUTS
+==================================== */
+
+// Category shortcuts take visitors directly
+// to the matching event catalogue.
+
+function chooseCategory(category) {
+
+    searchInput.value = "";
+
+    document.querySelectorAll(".filter-btn").forEach(button => {
+
+        button.classList.toggle(
+            "active",
+            button.dataset.category === category
+        );
+
+    });
+
+    searchEvents();
+
+}
+
+
+document.querySelectorAll("[data-discover]").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        chooseCategory(button.dataset.discover);
+
+        document.getElementById("events").scrollIntoView({
+
+            behavior: matchMedia(
+                "(prefers-reduced-motion: reduce)"
+            ).matches ? "instant" : "smooth"
+
+        });
+
+        searchInput.focus({
+            preventScroll: true
+        });
+
+    });
+
+});
+
+
+/* ====================================
+   28. RESET EVENT FILTERS
+==================================== */
+
+const resetFiltersButton = document.getElementById("resetFilters");
+
+const emptyResetButton = document.getElementById("emptyResetButton");
+
+
+function resetEventFilters() {
+
+    chooseCategory("All");
+
+    searchInput.value = "";
+
+    searchEvents();
+
+    searchInput.focus({
+        preventScroll: true
+    });
+
+}
+
+
+if (resetFiltersButton) {
+
+    resetFiltersButton.addEventListener(
+        "click",
+        resetEventFilters
+    );
+
+}
+
+
+if (emptyResetButton) {
+
+    emptyResetButton.addEventListener(
+        "click",
+        resetEventFilters
+    );
+
+}
+
+
+/* ====================================
+   29. IMAGE FALLBACK
+==================================== */
+
+// Keep a usable image if an event's original
+// artwork becomes unavailable.
+
+document.addEventListener("error", event => {
+
+    if (
+        event.target instanceof HTMLImageElement &&
+        !event.target.dataset.fallback
+    ) {
+
+        event.target.dataset.fallback = "true";
+
+        event.target.src =
+            "https://images.unsplash.com/photo-1506157786151-b8491531f063?auto=format&fit=crop&w=1200&q=85";
+
+    }
+
+}, true);
+
+
+/* ====================================
+   END OF EVENTORA JAVASCRIPT
+==================================== */
